@@ -1,0 +1,31 @@
+.inclusi-contrast {
+    background-color: #000 !important;
+    color: #ffeb3b !important;
+}
+
+/* garante que elementos internos também respeitem */
+.inclusi-contrast body {
+    background-color: #000 !important;
+    color: #ffeb3b !important;
+}
+
+.inclusi-contrast p,
+.inclusi-contrast span,
+.inclusi-contrast a,
+.inclusi-contrast li,
+.inclusi-contrast h1,
+.inclusi-contrast h2,
+.inclusi-contrast h3 {
+    color: #ffeb3b !important;
+}
+
+/* links continuam identificáveis */
+.inclusi-contrast a {
+    color: #4ea1ff !important;
+    text-decoration: underline;
+}
+
+/* hover de link */
+.inclusi-contrast a:hover {
+    color: #82cfff !important;
+}
