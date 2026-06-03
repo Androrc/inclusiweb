@@ -1,45 +1,53 @@
-console.log("Content Script carregado");
-
-let currentSize = 100;
-let contrastEnabled = false;
-
-// fonte + legibilidade
-function applyFontSize() {
-    document.documentElement.style.fontSize = currentSize + "%";
-}
-
-// aplica ao iniciar
-applyFontSize();
-
-// listener de mensagens
 chrome.runtime.onMessage.addListener((message) => {
 
-    switch (message.action) {
+    if (message.action === "openReaderMode") {
 
-        case "increaseFont":
-            if (currentSize < 160) {
-                currentSize += 10;
-                applyFontSize();
+        const blocks = extractBlocks();
+
+        chrome.runtime.sendMessage({
+            action: "openReader",
+            data: {
+                blocks,
+                title: document.title,
+                url: window.location.href
             }
-            break;
-
-        case "decreaseFont":
-            if (currentSize > 70) {
-                currentSize -= 10;
-                applyFontSize();
-            }
-            break;
-
-        case "toggleContrast":
-            contrastEnabled = !contrastEnabled;
-
-            if (contrastEnabled) {
-                document.documentElement.classList.add("inclusi-contrast");
-            } else {
-                document.documentElement.classList.remove("inclusi-contrast");
-            }
-
-            break;
+        });
     }
-
 });
+
+// ----------------------------
+// EXTRAÇÃO EM BLOCOS (IMPORTANTE)
+// ----------------------------
+function extractBlocks() {
+
+    const root =
+        document.querySelector("article") ||
+        document.querySelector("main") ||
+        document.body;
+
+    const elements = root.querySelectorAll("p, h1, h2, h3, img");
+
+    const blocks = [];
+
+    elements.forEach(el => {
+
+        if (el.tagName === "IMG") {
+            if (el.src) {
+                blocks.push({
+                    type: "image",
+                    value: el.src
+                });
+            }
+        } else {
+            const text = el.innerText?.trim();
+            if (text && text.length > 20) {
+                blocks.push({
+                    type: "text",
+                    value: text
+                });
+            }
+        }
+    });
+
+    return blocks;
+}

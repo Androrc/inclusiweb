@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>InclusiWeb Reader</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    line-height: 1.6;
+    transition: 0.2s;
+}
+
+img {
+    max-width: 100%;
+    margin: 10px 0;
+}
+
+.toolbar {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: rgba(255,255,255,0.9);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+button {
+    padding: 6px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background: white;
+}
+
+button:hover {
+    background: #f0f0f0;
+}
+
+/* CONTRASTE */
+.contrast {
+    background: black;
+    color: yellow;
+}
+
+/* DISLEXIA */
+.dyslexia {
+    font-family: Arial, sans-serif;
+    letter-spacing: 0.05em;
+}
+
+/* HIGHLIGHT */
+.highlight {
+    background: #ffe066;
+    color: #000;
+    padding: 2px 4px;
+    border-radius: 4px;
+    box-shadow: 0 0 0 2px #ffd43b;
+    transition: 0.15s;
+}
+</style>
+</head>
+
+<body>
+
+<div class="toolbar">
+  <button id="btnAplus">A+</button>
+  <button id="btnAminus">A-</button>
+  <button id="btnContrast">Contraste</button>
+  <button id="btnDyslexia">Dislexia</button>
+  <button id="btnSpeak">🔊 Ler</button>
+  <button id="btnStop">⏹</button>
+  <button id="btnReadAll">📖 Ler página</button>
+  <button id="btnToggleHover">🖱 Hover ON</button>
+</div>
+
+<h1 id="title"></h1>
+<div id="content"></div>
+
+<script src="reader.js"></script>
+
+</body>
+</html>

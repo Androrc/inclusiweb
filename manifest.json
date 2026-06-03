@@ -1,20 +1,23 @@
 {
   "manifest_version": 3,
-  "name": "Minha Primeira Extensão",
-  "version": "1.0",
+  "name": "InclusiWeb",
+  "version": "2.0",
+  "description": "Leitor acessível com modo leitura",
 
   "permissions": ["activeTab", "storage"],
 
-  "description": "Uma extensão simples de exemplo.",
   "action": {
     "default_popup": "popup/popup.html"
+  },
+
+  "background": {
+    "service_worker": "background.js"
   },
 
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content/content.js"],
-      "css": ["content/content.css"]
+      "js": ["content/content.js"]
     }
   ]
 }

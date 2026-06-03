@@ -1,31 +1,15 @@
-.inclusi-contrast {
-    background-color: #000 !important;
-    color: #ffeb3b !important;
+/* InclusiWeb - Content CSS (versão reader mode)
+   Agora não altera mais o site externo
+   Mantido apenas para debug ou extensões futuras
+*/
+
+/* Opcional: destaque de debug */
+.inclusi-debug {
+    outline: 2px solid red !important;
 }
 
-/* garante que elementos internos também respeitem */
-.inclusi-contrast body {
-    background-color: #000 !important;
-    color: #ffeb3b !important;
-}
-
-.inclusi-contrast p,
-.inclusi-contrast span,
-.inclusi-contrast a,
-.inclusi-contrast li,
-.inclusi-contrast h1,
-.inclusi-contrast h2,
-.inclusi-contrast h3 {
-    color: #ffeb3b !important;
-}
-
-/* links continuam identificáveis */
-.inclusi-contrast a {
-    color: #4ea1ff !important;
-    text-decoration: underline;
-}
-
-/* hover de link */
-.inclusi-contrast a:hover {
-    color: #82cfff !important;
+.highlight {
+    background: yellow;
+    color: black;
+    transition: 0.2s;
 }
