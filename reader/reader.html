@@ -5,64 +5,133 @@
 <title>InclusiWeb Reader</title>
 
 <style>
+/* 1. CONFIGURAÇÃO GERAL E TIPOGRAFIA */
 body {
-    font-family: Arial;
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-    line-height: 1.6;
-    transition: 0.2s;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    max-width: 750px; /* Largura ideal para a vista não se cansar navegando em linhas longas */
+    margin: 0 auto;
+    padding: 100px 24px 40px 24px; /* Espaço no topo para a barra não cobrir o título */
+    line-height: 1.8; /* Linhas mais espaçadas para facilitar o rastreamento visual */
+    color: #2D3748; /* Cinza escuro em vez de preto puro (menos agressivo) */
+    background-color: #FAFAFA; /* Branco fosco/gelo para fundo padrão */
+    transition: background-color 0.2s, color 0.2s;
+}
+
+h1 {
+    font-size: 2rem;
+    line-height: 1.3;
+    margin-bottom: 24px;
+    color: #1A202C;
+}
+
+p.reader-paragraph {
+    margin-bottom: 20px;
+    font-size: inherit; /* Segue o tamanho controlado pelos botões */
 }
 
 img {
     max-width: 100%;
-    margin: 10px 0;
+    height: auto;
+    border-radius: 8px;
+    margin: 20px 0;
 }
 
+/* 2. BARRA DE FERRAMENTAS MODERNA E ACESSÍVEL (TOPO FIXED) */
 .toolbar {
     position: fixed;
-    top: 10px;
-    right: 10px;
+    top: 0;
+    left: 0;
+    right: 0;
     display: flex;
-    flex-direction: column;
-    gap: 5px;
-    background: rgba(255,255,255,0.9);
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px); /* Efeito de vidro fosco moderno */
+    padding: 14px 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
 }
 
+/* 3. BOTÕES GRANDES E FÁCEIS DE CLICAR */
 button {
-    padding: 6px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 8px 14px;
     cursor: pointer;
-    border: 1px solid #ccc;
-    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    background: #FFFFFF;
+    color: #4A5568;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
 }
 
 button:hover {
-    background: #f0f0f0;
+    background: #EDF2F7;
+    border-color: #CBD5E0;
+    color: #1A202C;
 }
 
-/* CONTRASTE */
-.contrast {
-    background: black;
-    color: yellow;
+button:active {
+    transform: scale(0.97); /* Feedback visual de clique */
+}
+
+/* 4. MODOS DE ACESSIBILIDADE */
+
+/* CONTRASTE SUAVE */
+body.contrast {
+    background-color: #121316 !important;
+    color: #F7E06D !important;
+}
+
+body.contrast h1, 
+body.contrast .reader-paragraph {
+    color: #F7E06D !important;
+}
+
+body.contrast .toolbar {
+    background: rgba(26, 27, 31, 0.98);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    border-bottom: 1px solid #2D3139;
+}
+
+body.contrast button {
+    background: #22252A;
+    color: #F7E06D;
+    border: 1px solid #444955;
+}
+
+body.contrast button:hover {
+    background: #2D3139;
+    border-color: #F7E06D;
 }
 
 /* DISLEXIA */
-.dyslexia {
-    font-family: Arial, sans-serif;
-    letter-spacing: 0.05em;
+body.dyslexia {
+    /* Arial já possui excelente legibilidade, mas aumentamos o espaçamento de letras e palavras */
+    font-family: Arial, sans-serif !important;
+    letter-spacing: 0.07em !important;
+    word-spacing: 0.15em !important;
 }
 
-/* HIGHLIGHT */
+/* MARCADOR DE LEITURA (HIGHLIGHT) */
 .highlight {
-    background: #ffe066;
-    color: #000;
-    padding: 2px 4px;
+    background-color: #FEFCBF !important; /* Amarelo bem suave */
+    color: #000000 !important;
     border-radius: 4px;
-    box-shadow: 0 0 0 2px #ffd43b;
-    transition: 0.15s;
+    padding: 2px 4px;
+    box-shadow: 0 0 0 2px #FAF089;
+}
+
+/* Marcador dentro do Modo Contraste */
+body.contrast .highlight {
+    background-color: #2D3139 !important;
+    color: #F7E06D !important;
+    box-shadow: 0 0 0 2px #F7E06D;
 }
 </style>
 </head>
@@ -70,13 +139,12 @@ button:hover {
 <body>
 
 <div class="toolbar">
-  <button id="btnAplus">A+</button>
-  <button id="btnAminus">A-</button>
-  <button id="btnContrast">Contraste</button>
-  <button id="btnDyslexia">Dislexia</button>
-  <button id="btnSpeak">🔊 Ler</button>
-  <button id="btnStop">⏹</button>
-  <button id="btnReadAll">📖 Ler página</button>
+  <button id="btnAplus">➕ Aumentar Fonte</button>
+  <button id="btnAminus">➖ Diminuir Fonte</button>
+  <button id="btnContrast">🌗 Contraste</button>
+  <button id="btnDyslexia">📖 Modo Dislexia</button>
+  <button id="btnStop">⏹ Parar Leitura</button>
+  <button id="btnReadAll">🔊 Ler Página</button>
   <button id="btnToggleHover">🖱 Hover ON</button>
 </div>
 

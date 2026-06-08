@@ -1,5 +1,8 @@
-
+// fonte
 let fontSize = 18;
+const minFont = 12;
+const maxFont = 32;
+
 let currentText = "";
 
 // estados
@@ -53,13 +56,17 @@ function renderBlocks(blocks) {
 // CONTROLES DE TEXTO
 // ===============================
 function increaseFont() {
-    fontSize += 2;
-    document.body.style.fontSize = fontSize + "px";
+    if (fontSize < maxFont) {
+        fontSize += 2;
+        document.body.style.fontSize = fontSize + "px";
+    }
 }
 
 function decreaseFont() {
-    fontSize -= 2;
-    document.body.style.fontSize = fontSize + "px";
+    if (fontSize > minFont) {
+        fontSize -= 2;
+        document.body.style.fontSize = fontSize + "px";
+    }
 }
 
 // ===============================
@@ -73,20 +80,10 @@ function toggleDyslexia() {
     document.body.classList.toggle("dyslexia");
 }
 
-// ===============================
-// TTS GLOBAL
-// ===============================
-function speak() {
-
-    const utterance = new SpeechSynthesisUtterance(currentText);
-    utterance.lang = "pt-BR";
-
-    speechSynthesis.cancel();
-    speechSynthesis.speak(utterance);
-}
-
+// PARAR DE LER
 function stop() {
     speechSynthesis.cancel();
+    limparMarcacoes();
 }
 
 // ===============================
@@ -146,6 +143,19 @@ function readAllWithHighlight() {
     readNext();
 }
 
+// LIMPAR MARCAÇÃO
+function limparMarcacoes() {
+    const elementosMarcados = document.querySelectorAll('.highlight');
+
+    elementosMarcados.forEach(elemento => {
+        elemento.classList.remove('highlight');
+    });
+    
+    lastSpoken = null;
+    
+    window.speechSynthesis.cancel();
+}
+
 // ===============================
 // BOTÕES (EVENTOS)
 // ===============================
@@ -163,9 +173,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btnDyslexia")
         .addEventListener("click", toggleDyslexia);
 
-    document.getElementById("btnSpeak")
-        .addEventListener("click", speak);
-
     document.getElementById("btnStop")
         .addEventListener("click", stop);
 
@@ -182,6 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!hoverReadEnabled) {
                 speechSynthesis.cancel();
+                limparMarcacoes();
             }
         });
 });
@@ -192,6 +200,8 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("mouseover", (e) => {
 
     if (!hoverReadEnabled) return;
+    
+    if (speechSynthesis.speaking && !lastSpoken) return; 
 
     const p = e.target.closest(".reader-paragraph");
     if (!p) return;
