@@ -1,3 +1,6 @@
+
+// Message listener
+
 chrome.runtime.onMessage.addListener((message) => {
 
     if (message.action === "openReaderMode") {
@@ -12,13 +15,16 @@ chrome.runtime.onMessage.addListener((message) => {
                 url: window.location.href
             }
         });
+
     }
+
 });
 
-// ----------------------------
-// EXTRAÇÃO EM BLOCOS (IMPORTANTE)
-// ----------------------------
+// Content extraction
+
 function extractBlocks() {
+
+    // Prefer the main article content when available
 
     const root =
         document.querySelector("article") ||
@@ -32,22 +38,31 @@ function extractBlocks() {
     elements.forEach(el => {
 
         if (el.tagName === "IMG") {
+
             if (el.src) {
                 blocks.push({
                     type: "image",
                     value: el.src
                 });
             }
+
         } else {
+
             const text = el.innerText?.trim();
+
+            // Ignore very short text blocks
+
             if (text && text.length > 20) {
                 blocks.push({
                     type: "text",
                     value: text
                 });
             }
+
         }
+
     });
 
     return blocks;
+
 }

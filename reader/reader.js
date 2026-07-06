@@ -1,17 +1,19 @@
-// fonte
+
+// Font settings
+
 let fontSize = 18;
 const minFont = 12;
 const maxFont = 32;
 
 let currentText = "";
 
-// estados
+// Reader state
+
 let hoverReadEnabled = true;
 let lastSpoken = null;
 
-// ===============================
-// INIT
-// ===============================
+// Initialization
+
 chrome.storage.local.get("readerData", (data) => {
 
     const info = data.readerData;
@@ -27,9 +29,8 @@ chrome.storage.local.get("readerData", (data) => {
         .join(" ");
 });
 
-// ===============================
-// RENDER
-// ===============================
+// Content rendering
+
 function renderBlocks(blocks) {
 
     const container = document.getElementById("content");
@@ -49,29 +50,32 @@ function renderBlocks(blocks) {
             img.src = block.value;
             container.appendChild(img);
         }
+
     });
 }
 
-// ===============================
-// CONTROLES DE TEXTO
-// ===============================
+// Text controls
+
 function increaseFont() {
+
     if (fontSize < maxFont) {
         fontSize += 2;
         document.body.style.fontSize = fontSize + "px";
     }
+
 }
 
 function decreaseFont() {
+
     if (fontSize > minFont) {
         fontSize -= 2;
         document.body.style.fontSize = fontSize + "px";
     }
+
 }
 
-// ===============================
-// VISUAL
-// ===============================
+// Display modes
+
 function toggleContrast() {
     document.body.classList.toggle("contrast");
 }
@@ -80,18 +84,19 @@ function toggleDyslexia() {
     document.body.classList.toggle("dyslexia");
 }
 
-// PARAR DE LER
+// Speech controls
+
 function stop() {
     speechSynthesis.cancel();
     limparMarcacoes();
 }
 
-// ===============================
-// TTS POR PARÁGRAFO (HOVER)
-// ===============================
+// Hover reading
+
 function speakParagraph(el) {
 
     const text = el.innerText?.trim();
+
     if (!text) return;
 
     if (lastSpoken === text) return;
@@ -106,9 +111,8 @@ function speakParagraph(el) {
     speechSynthesis.speak(utterance);
 }
 
-// ===============================
-// LEITURA COMPLETA COM DESTAQUE
-// ===============================
+// Full page reading
+
 function readAllWithHighlight() {
 
     const paragraphs = Array.from(document.querySelectorAll(".reader-paragraph"));
@@ -143,22 +147,23 @@ function readAllWithHighlight() {
     readNext();
 }
 
-// LIMPAR MARCAÇÃO
+// Highlight management
+
 function limparMarcacoes() {
-    const elementosMarcados = document.querySelectorAll('.highlight');
+
+    const elementosMarcados = document.querySelectorAll(".highlight");
 
     elementosMarcados.forEach(elemento => {
-        elemento.classList.remove('highlight');
+        elemento.classList.remove("highlight");
     });
-    
+
     lastSpoken = null;
-    
+
     window.speechSynthesis.cancel();
 }
 
-// ===============================
-// BOTÕES (EVENTOS)
-// ===============================
+// Button events
+
 document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("btnAplus")
@@ -191,19 +196,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 speechSynthesis.cancel();
                 limparMarcacoes();
             }
+
         });
+
 });
 
-// ===============================
-// HOVER READING
-// ===============================
+// Hover event
+
 document.addEventListener("mouseover", (e) => {
 
     if (!hoverReadEnabled) return;
-    
-    if (speechSynthesis.speaking && !lastSpoken) return; 
+
+    if (speechSynthesis.speaking && !lastSpoken) return;
 
     const p = e.target.closest(".reader-paragraph");
+
     if (!p) return;
 
     document.querySelectorAll(".highlight")
@@ -212,4 +219,5 @@ document.addEventListener("mouseover", (e) => {
     p.classList.add("highlight");
 
     speakParagraph(p);
+
 });

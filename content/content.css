@@ -1,15 +1,9 @@
-/* InclusiWeb - Content CSS (versão reader mode)
-   Agora não altera mais o site externo
-   Mantido apenas para debug ou extensões futuras
+/*  
+    This file is currently reserved for
+    future features and debugging.
 */
 
-/* Opcional: destaque de debug */
+/* Debug */
 .inclusi-debug {
     outline: 2px solid red !important;
-}
-
-.highlight {
-    background: yellow;
-    color: black;
-    transition: 0.2s;
 }
