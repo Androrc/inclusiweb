@@ -12,7 +12,7 @@
 
         body {
             margin: 0;
-            padding-top: 150px;
+            padding-top: 140px;
             font-family: Inter, Arial, sans-serif;
             background: #F9F4EC;
             color: #3C342F;
@@ -21,7 +21,7 @@
 
         h1,
         #content {
-            max-width: 760px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 0 24px;
         }
@@ -49,22 +49,23 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 130px;
+            height: 120px;
             background: #E6D7C3;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            padding: 18px 32px;
+            justify-content: flex-start;
+            padding: 14px 32px 18px;
             box-sizing: border-box;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
+            border-bottom: 1px solid #D3C4B2;
+            box-shadow: 0 1px 2px rgba(0,0,0,.03);
             z-index: 9999;
         }
 
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 18px;
+            display:flex;
+            align-items:center;
+            gap:10px;
+            margin-bottom:14px;
         }
 
         .logo img {
@@ -82,15 +83,16 @@
 
         .toolbar-buttons {
             display: flex;
-            gap: 32px;
-            flex-wrap: wrap;
             align-items: center;
-            margin-left: 40px;
+            gap: 48px;
+            margin-top: -8px;
+            margin-left: 43px;
+            flex-wrap: nowrap;
         }
 
         .group {
             display: flex;
-            gap: 6px;
+            gap: 10px;
         }
 
         button {
@@ -111,11 +113,18 @@
         }
 
         button:hover {
-            background: #F3E7D7;
+            background:#EFE1CE;
+            border-color:#B89E7A;
         }
 
         button:active {
             transform: scale(.97);
+        }
+        
+        button.active{
+            background:#EFE1CE;
+            border:2px solid #8B6B4A;
+            color:#3C342F;
         }
 
         .icon {
@@ -128,7 +137,7 @@
         /* High contrast mode */
 
         body.contrast {
-            background: #121316 !important;
+            background: #111111 !important;
             color: #F7E06D !important;
         }
 
@@ -138,17 +147,15 @@
         }
 
         body.contrast .toolbar {
-            background: #1E2126;
+            background: #1D1F22;
+            border-bottom: 1px solid #383D44;
+            box-shadow: 0 1px 2px rgba(0,0,0,.25);
         }
 
         body.contrast button {
-            background: #2D3139;
+            background: #30343A;
             color: #F7E06D;
             border-color: #555;
-        }
-
-        body.contrast .logo svg {
-            fill: #F7E06D;
         }
 
         body.contrast .logo span {
@@ -156,7 +163,17 @@
         }
 
         body.contrast button:hover {
-            background: #40454F;
+            background: #474C55;
+        }
+
+        body.contrast button.active{
+            background:#474C55;
+            border: 2px solid #F7E06D;
+            color:#111111;
+        }
+
+        body.contrast button.active span {
+            color:#F7E06D;
         }
 
         /* Dyslexia mode */
@@ -170,16 +187,16 @@
         /* Reading highlight */
 
         .highlight {
-            background: #FEFCBF !important;
+            background: #F5E6A8 !important;
             color: #000 !important;
-            border-radius: 4px;
+            border-radius: 6px;
             padding: 2px 4px;
-            box-shadow: 0 0 0 2px #FAF089;
+            box-shadow:none;
         }
 
         body.contrast .highlight {
-            background: #2D3139 !important;
-            color: #F7E06D !important;
+            background: #F7E06D !important;
+            color: #2D3139 !important;
             box-shadow: 0 0 0 2px #F7E06D;
         }
 
@@ -214,16 +231,7 @@
 
                 <button id="btnDyslexia">
                     <img class="icon" src="icons/dyslexia.svg" alt="">
-                    <span>Modo Dislexia</span>
-                </button>
-            </div>
-
-            <!-- Display -->
-
-            <div class="group">
-                <button id="btnContrast">
-                    <img class="icon" src="icons/contrast.svg" alt="">
-                    <span>Modo Contraste</span>
+                    <span>Fonte para Dislexia</span>
                 </button>
             </div>
 
@@ -242,7 +250,16 @@
 
                 <button id="btnToggleHover">
                     <img class="icon" src="icons/hover.svg" alt="">
-                    <span>Hover ON</span>
+                    <span>Ler ao Passar</span>
+                </button>
+            </div>
+
+            <!-- Display -->
+
+            <div class="group">
+                <button id="btnContrast">
+                    <img class="icon" src="icons/contrast.svg" alt="">
+                    <span>Modo Contraste</span>
                 </button>
             </div>
 

@@ -9,8 +9,8 @@ let currentText = "";
 
 // Reader state
 
-let hoverReadEnabled = true;
 let lastSpoken = null;
+let hoverReadEnabled = false;
 
 // Initialization
 
@@ -77,11 +77,45 @@ function decreaseFont() {
 // Display modes
 
 function toggleContrast() {
+
     document.body.classList.toggle("contrast");
+
+    document
+        .getElementById("btnContrast")
+        .classList.toggle("active");
+
+    const contrastEnabled = document.body.classList.contains("contrast");
+
+    // Trade all icons
+    document.querySelectorAll(".icon").forEach(icon => {
+
+        if (contrastEnabled) {
+            icon.src = icon.src.replace(".svg", "-yellow.svg");
+        } else {
+            icon.src = icon.src.replace("-yellow.svg", ".svg");
+        }
+
+    });
+
+    // Trade logo
+    const logo = document.querySelector(".logo img");
+
+    if (contrastEnabled) {
+        logo.src = "icons/logo-yellow.svg";
+    } else {
+        logo.src = "icons/logo.svg";
+    }
+
 }
 
 function toggleDyslexia() {
+
     document.body.classList.toggle("dyslexia");
+
+    document
+        .getElementById("btnDyslexia")
+        .classList.toggle("active");
+
 }
 
 // Speech controls
@@ -89,6 +123,9 @@ function toggleDyslexia() {
 function stop() {
     speechSynthesis.cancel();
     limparMarcacoes();
+
+    document.getElementById("btnReadAll")
+        .classList.remove("active");
 }
 
 // Hover reading
@@ -115,13 +152,20 @@ function speakParagraph(el) {
 
 function readAllWithHighlight() {
 
+    const btn = document.getElementById("btnReadAll");
+    btn.classList.add("active");
+
     const paragraphs = Array.from(document.querySelectorAll(".reader-paragraph"));
 
     let index = 0;
 
     function readNext() {
 
-        if (index >= paragraphs.length) return;
+        if (index >= paragraphs.length) {
+            btn.classList.remove("active");
+            limparMarcacoes();
+            return;
+        }
 
         const p = paragraphs[index];
 
@@ -136,10 +180,21 @@ function readAllWithHighlight() {
         utterance.lang = "pt-BR";
 
         utterance.onend = () => {
-            index++;
-            readNext();
-        };
 
+            index++;
+
+            if (index >= paragraphs.length) {
+
+                btn.classList.remove("active");
+                limparMarcacoes();
+
+            } else {
+
+                readNext();
+
+            }
+
+        };
         speechSynthesis.speak(utterance);
     }
 
@@ -185,20 +240,21 @@ document.addEventListener("DOMContentLoaded", () => {
         .addEventListener("click", readAllWithHighlight);
 
     document.getElementById("btnToggleHover")
-        .addEventListener("click", () => {
+    .addEventListener("click", () => {
 
-            hoverReadEnabled = !hoverReadEnabled;
+        hoverReadEnabled = !hoverReadEnabled;
 
-            document.getElementById("btnToggleHover").innerText =
-                hoverReadEnabled ? "🖱 Hover ON" : "🖱 Hover OFF";
+        document
+            .getElementById("btnToggleHover")
+            .classList.toggle("active", hoverReadEnabled);
 
-            if (!hoverReadEnabled) {
-                speechSynthesis.cancel();
-                limparMarcacoes();
-            }
+        if (!hoverReadEnabled) {
 
-        });
+            speechSynthesis.cancel();
+            limparMarcacoes();
 
+        }
+    });
 });
 
 // Hover event
