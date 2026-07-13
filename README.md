@@ -15,6 +15,12 @@
 
 </p>
 
+## 🎬 Demo
+
+<p align="center">
+  <img src="images/gif.gif" alt="InclusiWeb Demo" width="90%">
+</p>
+
 ---
 
 ## About the Project
@@ -49,35 +55,29 @@ Besides representing Brazilian biodiversity, the giant anteater has naturally li
 
 ---
 
-## Screenshots
+## 📸 Screenshots
 
 ### Reader Mode
 
-> *(Insert screenshot here)*
-
-```
-images/reader.png
-```
+<p align="center">
+  <img src="images/reader.png" alt="Reader Mode" width="90%">
+</p>
 
 ---
 
 ### High Contrast Mode
 
-> *(Insert screenshot here)*
-
-```
-images/contrast.png
-```
+<p align="center">
+  <img src="images/contrast.png" alt="High Contrast Mode" width="90%">
+</p>
 
 ---
 
 ### Popup
 
-> *(Insert screenshot here)*
-
-```
-images/popup.png
-```
+<p align="center">
+  <img src="images/poup.png" alt="Extension Popup" width="45%">
+</p>
 
 ---
 
@@ -134,6 +134,7 @@ Several new features are already planned for future releases:
 - Interface improvements
 - Better responsive design
 - Performance optimizations
+- support for more browsers
 
 ---
 
@@ -152,9 +153,3 @@ If you'd like to help make the web more accessible, feel free to open an Issue o
 Accessibility should not be treated as an optional feature.
 
 InclusiWeb was created with the belief that reading on the web should be accessible to everyone, regardless of visual, cognitive, or learning limitations. This project represents a small contribution toward a more inclusive internet.
-
----
-
-## License
-
-This project was developed for educational purposes and is available as open source.
