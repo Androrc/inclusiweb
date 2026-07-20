@@ -15,7 +15,7 @@
 
 </p>
 
-## 🎬 Demo
+## Demo
 
 <p align="center">
   <img src="images/gif.gif" alt="InclusiWeb Demo" width="90%">
@@ -55,7 +55,7 @@ Besides representing Brazilian biodiversity, the giant anteater has naturally li
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 ### Reader Mode
 
